@@ -88,8 +88,8 @@
 		function resetGrid() {
 			for (var i = 0; i < values.length; i++) {
 				values[i] = "";
-				drawPieces();
 			}
+			drawPieces();
 		}
 
 		function showWinner() {
@@ -104,6 +104,7 @@
 			var myGrid = $("#grid");
 			myGrid.html('');
 
+			// Append grid
 			myGrid.append('<img class="grid" src="img/bg.png">');
 
 			// append all pieces
