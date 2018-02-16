@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tic Tac Toe</title>
+
+	<link rel="stylesheet" href="style.css">
+
+	<script
+	  src="http://code.jquery.com/jquery-3.3.1.min.js"
+	  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+	  crossorigin="anonymous"></script>
+</head>
+<body>
+	<h1>Tic Tac Toe</h1>
+	<div class="center">
+		<div id="grid"></div>
+	</div>
+
+	<script>
+		// Array of card values
+		var values = [
+			"", "", "",
+			"", "", "",
+			"", "", ""
+		];
+
+		// Current turn
+		var turn = "o";
+
+		// Draw initial pieces
+		drawPieces();
+
+		function handleClick(index) {
+			// Set value on grid
+			values[index] = turn;
+
+			// Update screen
+			drawPieces();
+			
+			// Check if all pieces set
+			setTimeout(checkTie, 2000);
+
+			// Check winner
+			checkWin();
+
+			// Change turn
+			if(turn == "o") {
+				turn = "x";
+			}
+			else {
+				turn = "o";
+			}
+		}
+
+		function checkWin() {
+			// Check rows and columns
+			for (var i = 0; i < 3; i++) {
+				if(values[i*3] != "" && values[i*3] == values[i*3+1] && values[i*3+1] == values[i*3+2]) {
+					showWinner();
+				}
+				else if(values[i] != "" && values[i] == values[i+3] && values[i+3] == values[i+6]) {
+					showWinner();
+				}
+			}
+
+			// Check diagonals
+			if(values[0] != "" && values[0] == values[4] && values[4] == values[8]) {
+				showWinner();
+			} else if(values[2] != "" && values[2] == values[4] && values[4] == values[6]) {
+				showWinner();
+			}
+		}
+
+		function checkTie() {
+			var tie = true;
+			for (var i = 0; i < values.length; i++) {
+				if(values[i] == "") {
+					tie = false;
+				}
+			}
+
+			if(tie) {
+				resetGrid();
+			}
+		}
+
+		function resetGrid() {
+			for (var i = 0; i < values.length; i++) {
+				values[i] = "";
+				drawPieces();
+			}
+		}
+
+		function showWinner() {
+			$("#grid").html(''); // delete all content
+			$("#grid").append('<img class="piece" src="img/' + turn + '.png"><h1>won !</h1>');
+			
+			setTimeout(resetGrid, 2000);
+		}
+
+		function drawPieces() {
+			// delete all content in div id=grid
+			var myGrid = $("#grid");
+			myGrid.html('');
+
+			myGrid.append('<img class="grid" src="img/bg.png">');
+
+			// append all pieces
+			for(var i = 0; i < values.length; i++) {
+				if(i % 3 == 0) { // i == 3 || i == 6
+					myGrid.append('<br>');
+				}
+
+				if(values[i] == "") { // if no piece
+					myGrid.append('<div class="piece blank" onclick="handleClick(' + i + ')"></div>');
+				}
+				else if(values[i] == "o") { // if piece "o"
+					myGrid.append('<img class="piece" src="img/o.png">');
+				}
+				else { // if piece "x"
+					myGrid.append('<img class="piece" src="img/x.png">');
+				}
+			}
+		}
+	</script>
+</body>
+</html>

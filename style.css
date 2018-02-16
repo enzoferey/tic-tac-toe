@@ -1,0 +1,30 @@
+body {
+	text-align: center;
+}
+
+.piece {
+	width: 120px;
+	margin: 6px 7px;
+	position: relative;
+	top: -6px;
+}
+
+.blank {
+	display: inline-block;
+	height: 120px;
+}
+
+.grid {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: -1;
+}
+
+.center {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
